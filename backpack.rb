@@ -5,50 +5,66 @@ class Backpack
     prepare
   end
 
+  def day
+    @attributes[:day_of_week]
+  end
+
+  def weather
+    @attributes[:weather]
+  end
+
   def items
     @items
   end
 
-  def prepare
-    # set up local variables used by rest of prepare method
-    x = @attributes[:weather]
-    day_of_week = @attributes[:day_of_week]
+  def add_pant_shirts
+    @items << 'pants'
+    @items << 'shirt'
+  end
 
-    # Ensure appropriate clothing is added to backpack
-    if x == 'rainy'
-      @items << 'pants'
-      @items << 'shirt'
+  def check_weather
+
+    if weather == 'rainy'
+      add_pant_shirts
       @items << 'umbrella'
-    elsif x == 'cold'
-      @items << 'pants'
-      @items << 'shirt'
+    elsif weather == 'cold'
+      add_pant_shirts
       @items << 'jacket'
     else
-      @items << 'pants'
-      @items << 'shirt'
+      add_pant_shirts
     end
 
+  end
+
+  def check_day
+
+
+
     # Ensure gym shoes are added to backpack if it's a gym day
-    # Gotta get to the gym on Tuesdays and Thursdays. Wait a sec...
-    if day_of_week == 'monday' || day_of_week == 'thursday'
+    if day == 'monday' || day == 'thursday'
       #add gym shoes to items
       @items << 'gym shoes'
     end
 
-    # Bring a packed lunch on all weekdays
-    if day_of_week != 'saturday' && day_of_week != 'sunday'
+    # add items according to the day
+    if day != 'saturday' && day != 'sunday'
       @items << 'packed lunch'
-    elsif false
-      # Used to bring snacks on weekend trips, but now I just buy 'em
+    else
       @items << 'snacks'
     end
+
+  end
+  def prepare
+    # set up functions for preparation
+    check_weather
+    check_day
   end
 
   # Prints a summary packing list for Melinda's backpack
-  def my_func
+  def print_summary
     output = []
     output << "Melinda, here's your packing list!"
-    output << "Day: #{@attributes[:day_of_week]}, Weather: #{@attributes[:weather]}"
+    output << "Day: #{day}, Weather: #{weather}"
     output << ""
 
     @items.each do |item|
